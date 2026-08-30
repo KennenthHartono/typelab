@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TypeLab — More than a typing test</title>
+  <meta name="description" content="TypeLab measures how you type, not just how fast." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="brand" href="#" data-nav="home">
+        <span class="brand__mark">TL</span>
+        <span class="brand__text">
+          <span class="brand__name">TypeLab</span>
+          <span class="brand__tagline">More than a typing test.</span>
+        </span>
+      </a>
+
+      <nav class="mainnav" aria-label="Primary">
+        <button class="mainnav__link is-active" data-nav="home">Type</button>
+        <button class="mainnav__link" data-nav="leaderboard">Leaderboard</button>
+        <button class="mainnav__link" data-nav="achievements">Achievements</button>
+      </nav>
+
+      <button class="icon-btn" id="settings-toggle" aria-label="Open settings" aria-haspopup="dialog">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M19.4 13.5a1.7 1.7 0 0 0 .34 1.87l.06.06a2.06 2.06 0 1 1-2.92 2.92l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.03 1.56v.17a2.06 2.06 0 1 1-4.12 0v-.09a1.7 1.7 0 0 0-1.11-1.56 1.7 1.7 0 0 0-1.87.34l-.06.06a2.06 2.06 0 1 1-2.92-2.92l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.56-1.03H2.5a2.06 2.06 0 1 1 0-4.12h.09A1.7 1.7 0 0 0 4.15 7.3a1.7 1.7 0 0 0-.34-1.87l-.06-.06A2.06 2.06 0 1 1 6.67 2.45l.06.06a1.7 1.7 0 0 0 1.87.34h.08A1.7 1.7 0 0 0 9.71 1.3V1.13a2.06 2.06 0 1 1 4.12 0v.09a1.7 1.7 0 0 0 1.03 1.56h.08a1.7 1.7 0 0 0 1.87-.34l.06-.06a2.06 2.06 0 1 1 2.92 2.92l-.06.06a1.7 1.7 0 0 0-.34 1.87v.08a1.7 1.7 0 0 0 1.56 1.03h.17a2.06 2.06 0 1 1 0 4.12h-.09a1.7 1.7 0 0 0-1.56 1.03Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+
+    <section class="screen is-active" id="screen-home" data-screen="home">
+      <div class="controlbar">
+        <div class="segmented" role="tablist" aria-label="Test mode">
+          <button class="segmented__item is-active" data-test-mode="time">Time</button>
+          <button class="segmented__item" data-test-mode="quote">Quote</button>
+          <button class="segmented__item" data-test-mode="programming">Programming</button>
+          <button class="segmented__item" data-test-mode="numbers">Numbers</button>
+          <button class="segmented__item" data-test-mode="custom">Custom</button>
+        </div>
+
+        <div class="controlbar__options">
+          <div class="segmented segmented--sub" id="duration-options">
+            <button class="segmented__item is-active" data-duration="15">15s</button>
+            <button class="segmented__item" data-duration="30">30s</button>
+            <button class="segmented__item" data-duration="60">60s</button>
+            <button class="segmented__item" data-duration="120">120s</button>
+          </div>
+
+          <select class="select" id="language-select" hidden>
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+            <option value="cpp">C++</option>
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <option value="json">JSON</option>
+            <option value="sql">SQL</option>
+          </select>
+        </div>
+      </div>
+
+      <textarea class="custom-text-input" id="custom-text-input" hidden
+        placeholder="Paste or write the text you want to practice with…"></textarea>
+
+      <div class="test-card" id="test-card">
+        <div class="livebar">
+          <div class="livebar__stat">
+            <span class="livebar__value" id="stat-time">15</span>
+            <span class="livebar__label">seconds</span>
+          </div>
+          <div class="livebar__stat">
+            <span class="livebar__value" id="stat-wpm">0</span>
+            <span class="livebar__label">wpm</span>
+          </div>
+          <div class="livebar__stat">
+            <span class="livebar__value" id="stat-raw">0</span>
+            <span class="livebar__label">raw</span>
+          </div>
+          <div class="livebar__stat">
+            <span class="livebar__value" id="stat-accuracy">100%</span>
+            <span class="livebar__label">accuracy</span>
+          </div>
+          <div class="livebar__stat">
+            <span class="livebar__value" id="stat-mistakes">0</span>
+            <span class="livebar__label">mistakes</span>
+          </div>
+          <div class="livebar__stat">
+            <span class="livebar__value" id="stat-chars">0</span>
+            <span class="livebar__label">chars</span>
+          </div>
+        </div>
+
+        <div class="progress-track" aria-hidden="true">
+          <div class="progress-track__fill" id="progress-fill"></div>
+        </div>
+
+        <div class="typing-area" id="typing-area" tabindex="0">
+          <div class="typing-text" id="typing-text"></div>
+        </div>
+
+        <p class="typing-hint">Start typing to begin · <kbd>Tab</kbd> then <kbd>Enter</kbd> to restart</p>
+      </div>
+
+      <div class="post-actions" id="post-actions" hidden>
+        <button class="btn btn--ghost" id="btn-restart">Restart</button>
+        <button class="btn btn--primary" id="btn-view-results">View results</button>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-results" data-screen="results">
+      <div class="results-header">
+        <div>
+          <h1>Session analysis</h1>
+          <p class="text-muted" id="results-subtitle">Here is how this run went, in detail.</p>
+        </div>
+        <div class="score-badge">
+          <span class="score-badge__value" id="overall-score">0</span>
+          <span class="score-badge__label">overall score</span>
+        </div>
+      </div>
+
+      <div class="stat-grid" id="stat-grid"></div>
+
+      <div class="panel-grid">
+        <article class="panel panel--wide">
+          <header class="panel__header"><h2>Speed timeline</h2><span class="text-muted">wpm over time</span></header>
+          <canvas id="chart-timeline" class="panel__canvas"></canvas>
+        </article>
+
+        <article class="panel">
+          <header class="panel__header"><h2>Performance radar</h2></header>
+          <canvas id="chart-radar" class="panel__canvas panel__canvas--square"></canvas>
+        </article>
+
+        <article class="panel panel--wide">
+          <header class="panel__header">
+            <h2>Keyboard heatmap</h2>
+            <div class="segmented segmented--sub">
+              <button class="segmented__item is-active" data-heatmap="usage">Usage</button>
+              <button class="segmented__item" data-heatmap="mistakes">Mistakes</button>
+            </div>
+          </header>
+          <canvas id="chart-heatmap" class="panel__canvas panel__canvas--short"></canvas>
+        </article>
+
+        <article class="panel">
+          <header class="panel__header"><h2>Typing fingerprint</h2></header>
+          <dl class="metric-list" id="fingerprint-list"></dl>
+        </article>
+
+        <article class="panel">
+          <header class="panel__header"><h2>Focus analysis</h2></header>
+          <dl class="metric-list" id="focus-list"></dl>
+        </article>
+
+        <article class="panel">
+          <header class="panel__header"><h2>Error analysis</h2></header>
+          <div id="error-lists"></div>
+        </article>
+
+        <article class="panel">
+          <header class="panel__header"><h2>Finger travel distance</h2></header>
+          <dl class="metric-list" id="travel-list"></dl>
+        </article>
+
+        <article class="panel panel--wide">
+          <header class="panel__header">
+            <h2>Replay</h2>
+            <span class="text-muted" id="replay-time">0.0s</span>
+          </header>
+          <div class="replay-text" id="replay-text"></div>
+          <input type="range" class="replay-scrubber" id="replay-scrubber" min="0" max="0" value="0" />
+        </article>
+      </div>
+
+      <div class="post-actions">
+        <button class="btn btn--ghost" data-nav="home">Back to typing</button>
+        <button class="btn btn--primary" id="btn-try-again">Try again</button>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-leaderboard" data-screen="leaderboard">
+      <div class="results-header">
+        <div>
+          <h1>Local leaderboard</h1>
+          <p class="text-muted">Every result is stored on this device only.</p>
+        </div>
+      </div>
+
+      <div class="stat-grid" id="leaderboard-summary"></div>
+
+      <article class="panel panel--wide">
+        <header class="panel__header"><h2>Trend</h2></header>
+        <canvas id="chart-trend" class="panel__canvas"></canvas>
+      </article>
+
+      <article class="panel panel--wide">
+        <table class="results-table" id="results-table">
+          <thead>
+            <tr>
+              <th>Date</th><th>Mode</th><th>WPM</th><th>Raw</th><th>Accuracy</th><th>Consistency</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </article>
+    </section>
+
+    <section class="screen" id="screen-achievements" data-screen="achievements">
+      <div class="results-header">
+        <div>
+          <h1>Achievements</h1>
+          <p class="text-muted">Unlocked automatically as you type.</p>
+        </div>
+      </div>
+      <div class="achievement-grid" id="achievement-grid"></div>
+    </section>
+
+  </main>
+
+  <div class="modal-backdrop" id="settings-backdrop" hidden>
+    <div class="modal" role="dialog" aria-label="Settings" aria-modal="true">
+      <header class="modal__header">
+        <h2>Settings</h2>
+        <button class="icon-btn" id="settings-close" aria-label="Close settings">✕</button>
+      </header>
+
+      <div class="setting-row">
+        <label for="setting-theme">Dark mode</label>
+        <input type="checkbox" id="setting-theme" class="switch" />
+      </div>
+      <div class="setting-row">
+        <label for="setting-sound">Sound effects</label>
+        <input type="checkbox" id="setting-sound" class="switch" />
+      </div>
+      <div class="setting-row">
+        <label for="setting-caret">Caret style</label>
+        <select id="setting-caret" class="select">
+          <option value="line">Line</option>
+          <option value="block">Block</option>
+          <option value="underline">Underline</option>
+        </select>
+      </div>
+      <div class="setting-row">
+        <label for="setting-fontsize">Font size</label>
+        <select id="setting-fontsize" class="select">
+          <option value="small">Small</option>
+          <option value="medium">Medium</option>
+          <option value="large">Large</option>
+        </select>
+      </div>
+      <div class="setting-row">
+        <label for="setting-animation">Smooth animation</label>
+        <input type="checkbox" id="setting-animation" class="switch" />
+      </div>
+      <div class="setting-row">
+        <label for="setting-colortheme">Color theme</label>
+        <select id="setting-colortheme" class="select">
+          <option value="default">Default</option>
+          <option value="monochrome">Monochrome</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toast-stack" aria-live="polite"></div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
